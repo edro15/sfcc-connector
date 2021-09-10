@@ -1,0 +1,6 @@
+# Constrain dev-requirements by requirements to avoid clashing requirements.
+-c requirements.txt
+
+freezegun
+pytest >= 6.0.2
+pytest-recording >= 0.9.0
