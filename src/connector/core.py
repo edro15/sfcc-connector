@@ -124,10 +124,14 @@ class SFCCCore(object):
         # Instantiate a client for all other calls
         if hasattr(SFCCClient, attr):
             def wrapper(*args, **kw):
-                # FIXME if not authenticated self.expiration is NONE!! Raise proper error
-                if datetime.now() >= self.expiration:
-                    print("Token expired. Authenticating before executing '{}'".format(attr))
+                try:
+                    if datetime.now() >= self.expiration:
+                        print("Token expired. Authenticating before executing '{}'".format(attr))
+                        self.authenticate()
+                except AttributeError as e:
+                    print("Token not found. Authenticating before executing '{}' [Error: {}]".format(attr, e))
                     self.authenticate()
+
                 return getattr(
                     SFCCClient(
                         authentication_method=HeaderAuthentication(token=self.token),
