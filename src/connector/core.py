@@ -53,7 +53,6 @@ class AppConfig(BaseModel):
     
     @validator("ocapi_version")
     def validate_ocapi_version(cls, v):
-        # TODO if not provided, perform a call to SFCC to get current version?
         pattern = re.compile("^v[0-9]{1,2}_[0-9]{1,2}$")
         if not pattern.match(v):
             raise ValueError("Unknown format of OCAPI Version. Supported format is v<year>_<consecutive number> (e.g. 'v13_1')")

@@ -79,7 +79,7 @@ class SFCCClient(APIClient):
 
     @paginated(by_query_params=get_next_page)
     @retry_request
-    def get_orders(self, begin_date: datetime, end_date: datetime, custom_query=dict()) -> dict:
+    def get_orders(self, begin_date: datetime, end_date: datetime, custom_query=dict(), custom_select=str()) -> dict:
         dt_format = "%Y-%m-%dT%H:%MZ"
 
         if custom_query:
@@ -102,6 +102,8 @@ class SFCCClient(APIClient):
             }]
 
             # To reduce amount of info retrieved at SFCC, use select as shown below
+            if custom_select:
+                query["select"] = custom_select
             # query["select"] = "(count,total,start,hits.(data.(order_no,creation_date)))"
 
             query["sorts"] = [{
@@ -119,7 +121,7 @@ class SFCCClient(APIClient):
     
     @paginated(by_query_params=get_next_page)
     @retry_request
-    def get_jobs(self, begin_date: datetime, end_date: datetime, custom_query=dict()) -> dict:
+    def get_jobs(self, begin_date: datetime, end_date: datetime, custom_query=dict(), custom_select=str()) -> dict:
         dt_format = "%Y-%m-%dT%H:%M:%S.000Z"
 
         if custom_query:
@@ -140,6 +142,9 @@ class SFCCClient(APIClient):
                     "to": "{}".format(end_date.strftime(dt_format))
                 }
             }]
+
+            if custom_select:
+                query["select"] = custom_select
 
             query["sorts"] = [{
                 "field": "id", 
