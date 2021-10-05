@@ -7,6 +7,7 @@ project_dir = Path(__file__).parent
 
 about = {}
 with open(project_dir.joinpath("src/connector", "__init__.py"), "r") as f:
+    # NOTE if you have import in __init__ --> failure
     exec(f.read(), about)
 
 setup(
@@ -27,7 +28,7 @@ setup(
     package_dir = {
         "sfcc-connector": "src"
     },
-    install_requires = project_dir.joinpath("requirements.txt").read_text().split("\n"),
+    install_requires = project_dir.joinpath("requirements.in").read_text().split("\n"),
     python_requires = ">=3.6",
     include_package_data = True,
     zip_safe = False,

@@ -59,7 +59,7 @@ By default all order fields will be returned. If you need to retrieve only a sel
 from __future__ import absolute_import
 from datetime import datetime, timedelta
 
-from src.connector import SFCCCore
+from src.connector.core import SFCCCore
 from apiclient.exceptions import APIRequestError
 
 

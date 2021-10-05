@@ -9,4 +9,4 @@ __maintainer__ = "Erica Pescio"
 __maintainer_email__ = "edro15@users.noreply.github.com"
 __keywords__ = ["python", "salesforce commerce cloud", "ocapi", "open commerce api", "sfcc"]
 
-from .core import SFCCCore
+# from .core import SFCCCore
