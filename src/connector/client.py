@@ -101,18 +101,18 @@ class SFCCClient(APIClient):
                 }
             }]
 
-            # To reduce amount of info retrieved at SFCC, use select as shown below
-            if custom_select:
-                query["select"] = custom_select
-            # query["select"] = "(count,total,start,hits.(data.(order_no,creation_date)))"
-
             query["sorts"] = [{
                 "field": "order_no",
                 "sort_order": "asc"
             }]
             
             query["query"]["filtered_query"]["filter"]["bool_filter"]["filters"] = range_filters
-        
+
+        # To reduce amount of info retrieved at SFCC, use select as shown below
+        if custom_select:
+            query["select"] = custom_select
+            # query["select"] = "(count,total,start,hits.(data.(order_no,creation_date)))"
+
         return self.post(ShopEndpoint.order_search, query)
     
     @retry_request
@@ -143,15 +143,15 @@ class SFCCClient(APIClient):
                 }
             }]
 
-            if custom_select:
-                query["select"] = custom_select
-
             query["sorts"] = [{
                 "field": "id", 
                 "sort_order": "asc"
             }]
 
             query["query"]["filtered_query"]["filter"]["bool_filter"]["filters"] = range_filters
+
+        if custom_select:
+            query["select"] = custom_select
 
         return self.post(DataEndpoint.job_execution_search, query)
     
