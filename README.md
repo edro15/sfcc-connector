@@ -23,7 +23,7 @@ No arguments to be provided. Returns a valid token according to [specs](https://
 
 #### `get_orders`
 The query used by default will retrieve all orders having `creation_date` or `last_modified` within the time interval defined by given `begin_date` and `end_date`. 
-Provide another query if you want to filter orders based on other criteria (see `custom_query`).
+Provide another query (`custom_query`) if you want to filter orders based on other criteria.
 
 By default all order fields will be returned. If you need to retrieve only a selection of them, please provide a `custom_select` as for example: `custom_select="(hits.(data.(creation_date,confirmation_status,total)))"`
 
@@ -42,7 +42,7 @@ By default all order fields will be returned. If you need to retrieve only a sel
 | `order`    | `int`      | Order ID to identify the order to be fetched |
 
 #### `get_jobs`
-The query used by default will retrieve all jobs having `start_time` or `end_time` within the time interval defined by given `begin_date` and `end_date`. Provide another query if you want to filter orders based on other criteria (see `custom_query`).
+The query used by default will retrieve all jobs having `start_time` or `end_time` within the time interval defined by given `begin_date` and `end_date`. Provide another query (`custom_query`) if you want to filter orders based on other criteria.
 
 By default all order fields will be returned. If you need to retrieve only a selection of them, please provide an opportune `custom_select`
 
