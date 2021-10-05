@@ -2,4 +2,7 @@ venv
 *.pyc
 __pycache__
 example*
-.pytest*%
+.pytest*
+dist
+build
+Salesforce_Commerce_Cloud_OCAPI_wrapper.egg-info
