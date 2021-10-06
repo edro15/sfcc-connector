@@ -1,5 +1,10 @@
 # Salesforce Commerce Cloud connector
-This library enables users to leverage a client offering resources to perform API calls against Salesforce Commerce Cloud (SFCC) via the standard [Open Commerce API (OCAPI)](https://www.salesforce.com/video/2520463/).
+[![PyPI version](https://badge.fury.io/py/sfcc-connector.svg)](https://badge.fury.io/py/sfcc-connector)
+![Python](https://img.shields.io/pypi/pyversions/sfcc-connector.svg)
+[![Actions Status: test](https://github.com/edro15/sfcc-connector/actions/workflows/test.yml/badge.svg)](https://github.com/edro15/sfcc-connector/actions?query=workflow%3A"Python%20testing")
+[![Actions Status: publish](https://github.com/edro15/sfcc-connector/actions/workflows/publish.yml/badge.svg)](https://github.com/edro15/sfcc-connector/actions?query=workflow%3A"Publish%20PyPi")
+
+This package enables users to leverage a client offering resources to perform API calls against Salesforce Commerce Cloud (SFCC) via the standard [Open Commerce API (OCAPI)](https://www.salesforce.com/video/2520463/).
 
 ## Features
 * Business Manager user grant authentication
@@ -12,11 +17,72 @@ This library enables users to leverage a client offering resources to perform AP
     
 ## Getting Started
 ### Installation
-TODO
+
+To install the tool via `pip` from `PyPI`:
+
+```bash
+pip install sfcc-connector
+```
 
 ### Usage
-TODO
+#### Simple Example
 
+```python
+#!/usr/bin/env python3
+from __future__ import absolute_import
+from datetime import datetime, timedelta
+
+from src.connector import SFCCClient
+from apiclient.exceptions import APIRequestError
+
+
+if __name__ == "__main__":
+    # !! Please replace values opportunely in your configuration !!
+    default_config = {
+        "domain": "<YOUR-DOMAIN:YOUR-PORT>",
+        "ocapi_version": "<YOUR-OCAPI-VERSION>",
+        "site_id": "<YOUR-SITE-ID>",
+        "use_ssl": False,
+        "is_production": False,
+        "username": "<YOUR_USERNAME>",
+        "password": "<YOUR_PASSWORD>",
+        "client_id": "<YOUR-CLIENT-ID>",
+        "client_password": "<YOUR-CLIENT-PWD>"
+    }
+
+    # Initialize client
+    client = SFCCClient(default_config)
+
+    # Perform calls against SFCC
+    try:
+        # Authentication is required to perform other calls
+        resp = client.authenticate()
+        print("Authentication response: {}".format(resp))
+
+        # Fetching order details for order with ID = 1
+        resp = client.get_order(1)
+        print("Get Order (1) response: {}".format(resp))
+
+        # Fetching all orders from yesterday up to now
+        begin = datetime.now()
+        end = begin - timedelta(days=1)
+        resp = client.get_orders(begin, end)
+        print("Get Orders response: {}".format(resp))
+
+        # Fetching all jobs from yesterday up to now
+        resp = client.get_jobs(begin, end)
+        print("Get Jobs response: {}".format(resp))
+        
+    except APIRequestError as e:
+        print("Error {}".format(e))
+```
+
+The `SFCCClient` exposes a number of predefined methods that can be called to access equivalent resources on Salesforce Commerce Cloud.
+
+* [`authenticate`](https://github.com/edro15/sfcc-connector#authenticate)
+* [`get_orders`](https://github.com/edro15/sfcc-connector#get_orders)
+* [`get_order`](https://github.com/edro15/sfcc-connector#get_orders)
+* [`get_jobs`](https://github.com/edro15/sfcc-connector#get_jobs)
 
 #### `authenticate`
 No arguments to be provided. Returns a valid token according to [specs](https://documentation.b2c.commercecloud.salesforce.com/DOC1/index.jsp?topic=%2Fcom.demandware.dochelp%2FOCAPI%2Fcurrent%2Fdata%2FResources%2FLogRequests.html&cp=0_15_4_30) when successful.
@@ -52,57 +118,6 @@ By default all order fields will be returned. If you need to retrieve only a sel
 | `end_date`                 | `datetime` | Used to filter jobs based on time interval                                                                                                                                                                                                                        |
 | (optional)  `custom_query` | `dict`     | To be built according to [specs](https://documentation.b2c.commercecloud.salesforce.com/DOC1/index.jsp?topic=%2Fcom.demandware.dochelp%2FOCAPI%2Fcurrent%2Fshop%2FDocuments%2FOrderSearchRequest.html&anchor=id635091637)  |
 | (optional) `custom_select` | `str`      | To limit the amount of returned fields |
-
-### Example
-```python
-#!/usr/bin/env python3
-from __future__ import absolute_import
-from datetime import datetime, timedelta
-
-from src.connector.core import SFCCCore
-from apiclient.exceptions import APIRequestError
-
-
-if __name__ == "__main__":
-    # !! Please replace values opportunely in your configuration !!
-    default_config = {
-        "domain": "<YOUR-DOMAIN:YOUR-PORT>",
-        "ocapi_version": "<YOUR-OCAPI-VERSION>",
-        "site_id": "<YOUR-SITE-ID>",
-        "use_ssl": False,
-        "is_production": False,
-        "username": "<YOUR_USERNAME>",
-        "password": "<YOUR_PASSWORD>",
-        "client_id": "<YOUR-CLIENT-ID>",
-        "client_password": "<YOUR-CLIENT-PWD>"
-    }
-
-    # Initialize client
-    client = SFCCCore(default_config)
-
-    # Perform calls against SFCC
-    try:
-        # Authentication is required to perform other calls
-        resp = client.authenticate()
-        print("{}\n\n".format(resp))
-
-        # Fetching order details for order with ID = 1
-        resp = client.get_order(1)
-        print("{}\n\n".format(resp))
-
-        # Fetching all orders from yesterday up to now
-        begin = datetime.now()
-        end = begin - timedelta(days=1)
-        resp = client.get_orders(begin, end)
-        print("{}\n\n".format(resp))
-
-        # Fetching all jobs from yesterday up to now
-        resp = client.get_jobs(begin, end)
-        print("{}\n\n".format(resp))
-        
-    except APIRequestError as e:
-        print("Error {}".format(e))
-```
 
 
 ## Contributing 
