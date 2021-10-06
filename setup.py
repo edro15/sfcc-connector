@@ -6,8 +6,7 @@ from pathlib import Path
 project_dir = Path(__file__).parent
 
 about = {}
-with open(project_dir.joinpath("src/connector", "__init__.py"), "r") as f:
-    # NOTE if you have import in __init__ --> failure
+with open(project_dir.joinpath("src/connector", "__main__.py"), "r") as f:
     exec(f.read(), about)
 
 setup(

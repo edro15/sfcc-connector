@@ -5,4 +5,4 @@ example*
 .pytest*
 dist
 build
-Salesforce_Commerce_Cloud_OCAPI_wrapper.egg-info
+*.egg-info
