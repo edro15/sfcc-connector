@@ -1,1 +1,1 @@
-from .core import SFCCCore
+from .core import SFCCClient

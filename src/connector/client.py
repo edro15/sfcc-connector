@@ -21,7 +21,7 @@ def get_next_page(response, previous_page_params):
 
 
 # Extend the client for your API integration.
-class SFCCClient(APIClient):
+class APIConnector(APIClient):
     """ Definition of client integrating with
         SFCC via OCAPI.
     """

@@ -1,4 +1,4 @@
-__title__ = "SFCC OCAPI connector"
+__title__ = "sfcc connector"
 __description__ = "Python connector for Salesforce Commerce Cloud Open Commerce API"
 __url__ = "https://github.com/edro15/sfcc-connector"
 __version__ = "1.0.0"

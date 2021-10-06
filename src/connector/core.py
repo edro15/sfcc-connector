@@ -15,7 +15,7 @@ from .extensions import (
     SFCCErrorHandler
 )
 
-from .client import SFCCClient
+from .client import APIConnector
 
 class AppConfig(BaseModel):
     # TODO extend validation / constraints on these values
@@ -58,8 +58,8 @@ class AppConfig(BaseModel):
             raise ValueError("Unknown format of OCAPI Version. Supported format is v<year>_<consecutive number> (e.g. 'v13_1')")
         return v
 
-class SFCCCore(object):
-    """This class will handle authentication and API calls towards SFCC via client.
+class SFCCClient(object):
+    """This class will handle authentication and API calls towards SFCC.
 
        Initialization may raise APIRequestError and other exception
     """
@@ -92,7 +92,7 @@ class SFCCCore(object):
             2. Set token and its expiration
         """
         # Instantiate a client for authentication
-        oauth_client = SFCCClient(
+        oauth_client = APIConnector(
             config=self.configuration,
             authentication_method=HeaderAuthentication(
                 token=self.configuration.auth_header.decode(),
@@ -121,7 +121,7 @@ class SFCCCore(object):
         """ Route calls to the client object
         """
         # Instantiate a client for all other calls
-        if hasattr(SFCCClient, attr):
+        if hasattr(APIConnector, attr):
             def wrapper(*args, **kw):
                 try:
                     if datetime.now() >= self.expiration:
@@ -132,7 +132,7 @@ class SFCCCore(object):
                     self.authenticate()
 
                 return getattr(
-                    SFCCClient(
+                    APIConnector(
                         authentication_method=HeaderAuthentication(token=self.token),
                         response_handler=JsonResponseHandler,
                         error_handler=SFCCErrorHandler,
