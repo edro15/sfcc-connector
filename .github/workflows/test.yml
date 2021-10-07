@@ -34,7 +34,7 @@ jobs:
     name: Unit tests
     runs-on: ubuntu-latest
     needs: lint
-    if: ${{ hashFiles('tests/test.py') != '' }}
+    if: ${{ hashFiles('**/test.py') != '' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v1
