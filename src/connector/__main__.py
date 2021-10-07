@@ -1,5 +1,5 @@
 __title__ = "sfcc connector"
-__description__ = "Python connector for Salesforce Commerce Cloud Open Commerce API"
+__description__ = "Python connector for Salesforce Commerce Cloud via Open Commerce API"
 __url__ = "https://github.com/edro15/sfcc-connector"
 __version__ = "1.0.0"
 __author__ = "Erica Pescio"
