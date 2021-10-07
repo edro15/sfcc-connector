@@ -64,8 +64,8 @@ if __name__ == "__main__":
         print("Get Order (1) response: {}".format(resp))
 
         # Fetching all orders from yesterday up to now
-        begin = datetime.now()
-        end = begin - timedelta(days=1)
+        end = datetime.now()
+        begin = end - timedelta(days=1)
         resp = client.get_orders(begin, end)
         print("Get Orders response: {}".format(resp))
 
