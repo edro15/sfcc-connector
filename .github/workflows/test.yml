@@ -48,12 +48,18 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install --upgrade wheel pytest
       
-      - name: Verify tests execution readiness
-        run: |
-          exec_tests=$(find tests -maxdepth 1 -type f -name 'test*' > /dev/null 2>&1; echo $?)
-          exit $exec_tests
+      # - name: Verify tests execution readiness
+      #   run: |
+      #     exec_tests=$(find tests -maxdepth 1 -type f -name 'test*' > /dev/null 2>&1; echo $?)
+      #     exit $exec_tests
 
       - name: Run tests
-        if: ${{ success() }}
+        # if: ${{ success() }}
         run: |
-          pytest --record-mode=none tests/test* -vv
+          exec_tests=$(find tests -maxdepth 1 -type f -name 'test*' > /dev/null 2>&1; echo $?)
+          if test $exec_tests -eq 0
+          then
+            pytest --record-mode=none tests/test* -vv
+          else
+            echo "Files not found: skipping tests execution"
+          fi
