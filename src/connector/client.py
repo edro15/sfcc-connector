@@ -7,7 +7,7 @@ from apiclient import (
 )
 
 from src.connector import api
-from src.connector.api import * # noqa: F403
+from src.connector.api import *  # noqa: F403
 
 from .queries import default_query
 
