@@ -7,14 +7,10 @@ from apiclient import (
 )
 
 from src.connector import api
-from src.connector.api import (
-    Endpoint,
-    ShopEndpoint,
-    DataEndpoint,
-    AuthEndpoint
-)
+from src.connector.api import *
 
 from .queries import default_query
+
 
 def get_next_page(response, previous_page_params):
     return {
@@ -69,7 +65,7 @@ class APIConnector(APIClient):
 
             Retry policy:
             * Every request responding w/ 5xx status code
-            * Max of 5 minutes with exponential backoff strategy with a maximum wait time of 30 seconds. 
+            * Max of 5 minutes with exponential backoff strategy with a maximum wait time of 30 seconds.
             * Retrying will stop after 5 minutes
         """
 
@@ -146,7 +142,7 @@ class APIConnector(APIClient):
             }]
 
             query["sorts"] = [{
-                "field": "id", 
+                "field": "id",
                 "sort_order": "asc"
             }]
 

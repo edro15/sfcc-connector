@@ -60,6 +60,7 @@ class AppConfig(BaseModel):
                 is v<year>_<consecutive number> (e.g. 'v13_1')")
         return v
 
+
 class SFCCClient(object):
     """This class will handle authentication and API calls towards SFCC.
 
