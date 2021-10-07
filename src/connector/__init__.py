@@ -1,3 +1,3 @@
 from .core import SFCCClient
 
-__all__ = ['SFCCClient',]
+__all__ = ['SFCCClient']
