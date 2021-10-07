@@ -2,7 +2,7 @@
 [![PyPI version](https://badge.fury.io/py/sfcc-connector.svg)](https://badge.fury.io/py/sfcc-connector)
 ![Python](https://img.shields.io/pypi/pyversions/sfcc-connector.svg)
 [![Actions Status: test](https://github.com/edro15/sfcc-connector/actions/workflows/test.yml/badge.svg)](https://github.com/edro15/sfcc-connector/actions?query=workflow%3A"Python%20testing")
-[![Actions Status: publish](https://github.com/edro15/sfcc-connector/actions/workflows/publish.yml/badge.svg)](https://github.com/edro15/sfcc-connector/actions?query=workflow%3A"Publish%20PyPI")
+[![Actions Status: release](https://github.com/edro15/sfcc-connector/actions/workflows/release.yml/badge.svg)](https://github.com/edro15/sfcc-connector/actions?query=workflow%3A"Publish%20PyPI")
 
 This package enables users to leverage a client offering resources to perform API calls against Salesforce Commerce Cloud (SFCC) via the standard [Open Commerce API (OCAPI)](https://www.salesforce.com/video/2520463/).
 
