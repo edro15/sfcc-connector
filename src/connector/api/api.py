@@ -1,14 +1,15 @@
 from apiclient import endpoint
-from string import Template
+# from string import Template
 
 
 class Endpoint:
     def __setattr__(self, name, value):
         self.__dict__[name] = value
-    
-# 
+
+#
 # Define endpoints, using the provided decorator.
-# 
+#
+
 
 @endpoint(base_url="{domain}/dw/oauth2")
 class AuthEndpoint(Endpoint):
@@ -19,16 +20,18 @@ class AuthEndpoint(Endpoint):
 class ShopEndpoint(Endpoint):
     order_search = "order_search"
     order = "orders/{order_no}"
-    # 
+    #
     # Add more endpoints below
-    # 
+    #
+
 
 @endpoint(base_url="{url}/data/{ocapi_version}")
 class DataEndpoint(Endpoint):
     job_execution_search = "job_execution_search"
-    # 
+    #
     # Add more endpoints below
-    # 
+    #
+
 
 @endpoint(base_url="{url}/meta/v1")
 class MetadataEndpoint(Endpoint):

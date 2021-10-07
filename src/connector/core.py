@@ -2,7 +2,7 @@ import base64
 import re
 from datetime import datetime, timedelta
 from typing import Optional
-from pydantic import BaseModel, validator, constr, ValidationError
+from pydantic import BaseModel, validator, ValidationError
 
 from apiclient import (
     HeaderAuthentication,
@@ -16,6 +16,7 @@ from .extensions import (
 )
 
 from .client import APIConnector
+
 
 class AppConfig(BaseModel):
     # TODO extend validation / constraints on these values
@@ -34,10 +35,10 @@ class AppConfig(BaseModel):
         protocol = "https://" if self.use_ssl else "http://"
         site_id_url = "/s/{}".format(self.site_id)
         prod_url = "{}".format(site_id_url if not self.is_production else "")
-        return "{}{}{}/dw".format(protocol, self.domain, prod_url) 
+        return "{}{}{}/dw".format(protocol, self.domain, prod_url)
         # http(s)://public_domain[/s/site_id]/dw/api_type/ PROD
         # http(s)://sub_domain.demandware.net/s/site_id/dw/api_type/ NOT-prod
-    
+
     @property
     def base_domain(self):
         protocol = "https://" if self.use_ssl else "http://"
@@ -50,12 +51,13 @@ class AppConfig(BaseModel):
             self.password,
             self.client_password).encode('utf-8')
         return base64.b64encode(ret_val)
-    
+
     @validator("ocapi_version")
     def validate_ocapi_version(cls, v):
         pattern = re.compile("^v[0-9]{1,2}_[0-9]{1,2}$")
         if not pattern.match(v):
-            raise ValueError("Unknown format of OCAPI Version. Supported format is v<year>_<consecutive number> (e.g. 'v13_1')")
+            raise ValueError("Unknown format of OCAPI Version. Supported format \
+                is v<year>_<consecutive number> (e.g. 'v13_1')")
         return v
 
 class SFCCClient(object):
@@ -66,7 +68,7 @@ class SFCCClient(object):
     @property
     def configuration(self):
         return self._configuration
-    
+
     @configuration.setter
     def configuration(self, new_configuration):
         self._configuration = new_configuration
@@ -74,19 +76,19 @@ class SFCCClient(object):
     @property
     def expiration(self):
         return self._expiration
-    
+
     @expiration.setter
     def expiration(self, new_expiration):
         self._expiration = datetime.now() + timedelta(seconds=new_expiration)
-    
+
     @property
     def token(self):
         return self._token
-    
+
     @token.setter
     def token(self, new_token):
         self._token = new_token
-    
+
     def authenticate(self):
         """ 1. Perform authentication against SFCC
             2. Set token and its expiration
@@ -103,7 +105,7 @@ class SFCCClient(object):
             error_handler=SFCCErrorHandler,
             request_formatter=LoginRequestFormatter
         )
-        
+
         # This call may raise APIRequestError
         resp = oauth_client.authenticate()
         self.token = resp["access_token"]
@@ -116,7 +118,7 @@ class SFCCClient(object):
             self.configuration = AppConfig(**cfg)
         except ValidationError as e:
             raise ValueError("Configuration initialization failed with error {}".format(e))
-        
+
     def __getattr__(self, attr):
         """ Route calls to the client object
         """
@@ -148,5 +150,3 @@ class SFCCClient(object):
             return "Authenticated. Token {} is still valid".format(self.token)
         else:
             return "Token expired or not found. Please authenticate again."
-    
-

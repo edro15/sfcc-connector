@@ -26,7 +26,7 @@ class LoginRequestFormatter(BaseRequestFormatter):
 class SFCCErrorHandler(BaseErrorHandler):
     """Format the error messages according to SFCC definition
     """
-    
+
     @staticmethod
     def get_exception(response: Response) -> exceptions.APIRequestError:
         """Parses client errors to extract bad request reasons."""
@@ -39,6 +39,5 @@ class SFCCErrorHandler(BaseErrorHandler):
         if 400 <= response.get_status_code() < 500:
             # json = response.get_json()
             return exceptions.ClientError(error, response.get_status_code())
-        
+
         return exceptions.APIRequestError(error, response.get_status_code())
-    

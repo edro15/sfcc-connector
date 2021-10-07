@@ -7,11 +7,14 @@ from apiclient import (
 )
 
 from src.connector import api
-from src.connector.api import * 
+from src.connector.api import (
+    Endpoint,
+    ShopEndpoint,
+    DataEndpoint,
+    AuthEndpoint
+)
 
 from .queries import default_query
-
-
 
 def get_next_page(response, previous_page_params):
     return {
@@ -60,11 +63,10 @@ class APIConnector(APIClient):
                         resource = resource.replace(site_id, "-")
                     setattr(endpoint, name, resource)
 
-
-    @retry_request 
+    @retry_request
     def authenticate(self) -> dict:
         """ Perform authentication at SFCC. When successful, returns valid token.
-            
+
             Retry policy:
             * Every request responding w/ 5xx status code
             * Max of 5 minutes with exponential backoff strategy with a maximum wait time of 30 seconds. 
@@ -84,7 +86,7 @@ class APIConnector(APIClient):
 
         if custom_query:
             query = custom_query
-        
+
         else:
             query = default_query
             range_filters = [{
@@ -105,7 +107,7 @@ class APIConnector(APIClient):
                 "field": "order_no",
                 "sort_order": "asc"
             }]
-            
+
             query["query"]["filtered_query"]["filter"]["bool_filter"]["filters"] = range_filters
 
         # To reduce amount of info retrieved at SFCC, use select as shown below
@@ -114,11 +116,11 @@ class APIConnector(APIClient):
             # query["select"] = "(count,total,start,hits.(data.(order_no,creation_date)))"
 
         return self.post(ShopEndpoint.order_search, query)
-    
+
     @retry_request
     def get_order(self, order: int) -> dict:
         return self.get(ShopEndpoint.order.format(order_no=order))
-    
+
     @paginated(by_query_params=get_next_page)
     @retry_request
     def get_jobs(self, begin_date: datetime, end_date: datetime, custom_query=dict(), custom_select=str()) -> dict:
@@ -154,7 +156,7 @@ class APIConnector(APIClient):
             query["select"] = custom_select
 
         return self.post(DataEndpoint.job_execution_search, query)
-    
-    # 
+
+    #
     # Add here other API calls
-    # 
+    #
