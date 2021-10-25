@@ -6,8 +6,8 @@ from apiclient import (
     retry_request
 )
 
-from src.connector import api
-from src.connector.api import *
+from sfcc_connector import api
+from sfcc_connector.api import *
 
 from .queries import default_query
 

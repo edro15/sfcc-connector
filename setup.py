@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-from setuptools import setup, find_packages
+from setuptools import setup
 from pathlib import Path
 
 project_dir = Path(__file__).parent
 
 about = {}
-with open(project_dir.joinpath("src/connector", "__main__.py"), "r") as f:
+with open(project_dir.joinpath("sfcc_connector", "__main__.py"), "r") as f:
     exec(f.read(), about)
 
 setup(
@@ -23,10 +23,7 @@ setup(
     license=about["__license__"],
     url = about["__url__"],
     keywords = about["__keywords__"],
-    packages = find_packages("src"),
-    package_dir = {
-        "": "src"
-    },
+    packages = ["sfcc_connector",],
     install_requires = project_dir.joinpath("requirements.in").read_text().split("\n"),
     python_requires = ">=3.6",
     include_package_data = True,

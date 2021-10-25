@@ -32,7 +32,7 @@ pip install sfcc-connector
 from __future__ import absolute_import
 from datetime import datetime, timedelta
 
-from src.connector import SFCCClient
+from sfcc_connector import SFCCClient
 from apiclient.exceptions import APIRequestError
 
 
