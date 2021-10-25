@@ -78,7 +78,7 @@ class APIConnector(APIClient):
     @paginated(by_query_params=get_next_page)
     @retry_request
     def get_orders(self, begin_date: datetime, end_date: datetime, custom_query=dict(), custom_select=str()) -> dict:
-        dt_format = "%Y-%m-%dT%H:%MZ"
+        dt_format = "%Y-%m-%dT%H:%M:%S.000Z"
 
         if custom_query:
             query = custom_query
