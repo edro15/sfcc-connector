@@ -23,9 +23,9 @@ setup(
     license=about["__license__"],
     url = about["__url__"],
     keywords = about["__keywords__"],
-    packages = find_packages("sfcc-connector.connector"),
+    packages = find_packages("src"),
     package_dir = {
-        "sfcc-connector": "src"
+        "": "src"
     },
     install_requires = project_dir.joinpath("requirements.in").read_text().split("\n"),
     python_requires = ">=3.6",
