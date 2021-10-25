@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-from setuptools import setup
+from setuptools import setup, find_packages
 from pathlib import Path
 
 project_dir = Path(__file__).parent
@@ -23,7 +23,7 @@ setup(
     license=about["__license__"],
     url = about["__url__"],
     keywords = about["__keywords__"],
-    packages = ["sfcc_connector",],
+    packages = find_packages(),
     install_requires = project_dir.joinpath("requirements.in").read_text().split("\n"),
     python_requires = ">=3.6",
     include_package_data = True,
